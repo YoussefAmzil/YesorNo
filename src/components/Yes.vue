@@ -27,11 +27,20 @@ export default {
   },
   methods:{
    getAnswer(){
-       axios.get('https://yesno.wtf/api').then(response=>{
+
+     if (this.text==='') {
+
+       this.$swal({
+          type: 'error',
+        title: 'Oops...',
+        text: 'You have to fill the Text Box!'
+       })
+      
+     }else{
+          axios.get('https://yesno.wtf/api').then(response=>{
             this.answer= response.data;
             this.$swal({
     		  title: '<h1 >'+this.answer.answer.toUpperCase()+'</h1>',
-          // add a custom html tags by defining a html method.
           html:
             '<img src='+this.answer.image+'>',
           showCloseButton: true,
@@ -41,6 +50,8 @@ export default {
           }).catch(error=>{
               console.log(error);
           })
+         }
+
     }
   }
 }
